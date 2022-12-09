@@ -6,6 +6,7 @@ import Button from "./Button/Button";
 import Modal from "./Modal/Modal";
 import { Notify } from "notiflix/build/notiflix-notify-aio";
 import style from "./App.module.css";
+import Loader from "./Loader/Loader";
 
 export default class App extends Component {
   state = {
@@ -96,7 +97,7 @@ export default class App extends Component {
       <div className={style.App}>
         {error && Notify.failure('Sorry, there is some error')}
         <Searchbar onSubmit={this.handleFormSubmit} />
-        {loading && <h1>Loading</h1>}
+        {loading && <Loader />}
         {images.length > 0 && (
           <ImageGallery images={images} openModal={this.openModal} />
         )}

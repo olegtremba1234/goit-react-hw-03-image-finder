@@ -21,25 +21,21 @@ export default class App extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
+    if (this.state.searchQuery !== prevState.searchQuery) {
+      this.setState({ images: [] });
+    }
     if (
       prevState.searchQuery !== this.state.searchQuery ||
       prevState.currentPage !== this.state.currentPage
     ) {
+      this.setState({ loading: true });
       this.fetchImages();
     }
   }
 
   handleFormSubmit = query => {
-    this.setState({
-      images: [],
-      searchQuery: query,
-      largeImageURL: '',
-      currentPage: 1,
-      total: 0,
-      showModal: false,
-      loading: false,
-      error: null,
-    });
+    this.setState({ currentPage: 1 });
+    this.setState({ searchQuery: query });
   };
 
   fetchImages = () => {

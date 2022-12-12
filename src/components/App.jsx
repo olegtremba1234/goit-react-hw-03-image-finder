@@ -12,10 +12,9 @@ export default class App extends Component {
   state = {
     images: [],
     searchQuery: '',
-    largeImageURL: '',
+    largeImageURL: null,
     currentPage: 1,
     total: 0,
-    showModal: false,
     loading: false,
     error: null,
   };
@@ -76,19 +75,18 @@ export default class App extends Component {
   };
 
   toggleModal = () => {
-    this.setState(({ showModal }) => ({
-      showModal: !showModal,
+    this.setState(({ largeImageURL }) => ({
+      largeImageURL: null
     }));
   };
 
   openModal = searchId => {
     const image = this.state.images.find(image => image.id === searchId);
     this.setState({ largeImageURL: image.largeImageURL });
-    this.toggleModal();
   };
 
   render() {
-    const { images, loading, showModal, error, largeImageURL } = this.state;
+    const { images, loading, error, largeImageURL } = this.state;
     return (
       <div className={style.App}>
         {error && Notify.failure('Sorry, there is some error')}
@@ -102,7 +100,7 @@ export default class App extends Component {
           images.length !== this.state.total && (
             <Button onClick={this.loadMore} />
           )}
-        {showModal && (
+        {largeImageURL && (
           <Modal onClose={this.toggleModal} largeImage={largeImageURL} />
         )}
       </div>
